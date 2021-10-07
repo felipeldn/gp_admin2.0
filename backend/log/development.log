@@ -1,0 +1,192 @@
+  [1m[35m (3.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreatePatients (20211007152506)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "patients" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "dob" date, "gender" varchar, "telephone" varchar, "address" varchar, "hosp_number" varchar, "nhs_number" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007152506"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateClinicians (20211007152918)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "clinicians" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "username" varchar, "email" varchar, "password_digest" varchar, "specialty" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007152918"]]
+  [1m[35m (1.5ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateContacts (20211007154546)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "contacts" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "date_time" datetime, "duration" integer, "contact_type" varchar, "patient_id" integer NOT NULL, "clinician_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_465e783a10"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+, CONSTRAINT "fk_rails_70efee4d12"
+FOREIGN KEY ("clinician_id")
+  REFERENCES "clinicians" ("id")
+)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE  INDEX "index_contacts_on_patient_id" ON "contacts" ("patient_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_contacts_on_clinician_id" ON "contacts" ("clinician_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007154546"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateHeartRates (20211007160642)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "heart_rates" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" integer, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_b15701fc8b"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_heart_rates_on_patient_id" ON "heart_rates" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007160642"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateBloodPressures (20211007161225)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "blood_pressures" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "systolic_value" integer, "diastolic_value" integer, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_65a4be6478"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_blood_pressures_on_patient_id" ON "blood_pressures" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007161225"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateRespRates (20211007161539)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "resp_rates" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" integer, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_0b5eafbfff"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_resp_rates_on_patient_id" ON "resp_rates" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007161539"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateO2Sats (20211007161912)
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "o2_sats" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" integer, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_e7fd4458ea"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE  INDEX "index_o2_sats_on_patient_id" ON "o2_sats" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007161912"]]
+  [1m[35m (3.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateTemps (20211007163801)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "temps" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" float, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_c2f994cfb9"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_temps_on_patient_id" ON "temps" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007163801"]]
+  [1m[35m (1.5ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateIrregEpisodes (20211007164021)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "irreg_episodes" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" integer, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_d14c09604a"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE  INDEX "index_irreg_episodes_on_patient_id" ON "irreg_episodes" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007164021"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateBloodGlucoses (20211007164214)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "blood_glucoses" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" float, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_39e718e8b5"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_blood_glucoses_on_patient_id" ON "blood_glucoses" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007164214"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateCalorieIntakes (20211007164344)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "calorie_intakes" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" integer, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_9d21426a85"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_calorie_intakes_on_patient_id" ON "calorie_intakes" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007164344"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateActiveCalories (20211007164518)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "active_calories" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" integer, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_18094bc5b1"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_active_calories_on_patient_id" ON "active_calories" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007164518"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateSteps (20211007164703)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "steps" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" integer, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_422fb76839"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_steps_on_patient_id" ON "steps" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007164703"]]
+  [1m[35m (6.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateTimeStandings (20211007164841)
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "time_standings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" integer, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_034c6b717e"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_time_standings_on_patient_id" ON "time_standings" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007164841"]]
+  [1m[35m (1.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateFlightsClimbed (20211007165016)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "flights_climbed" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" integer, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_c6a2cc2fac"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE  INDEX "index_flights_climbed_on_patient_id" ON "flights_climbed" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007165016"]]
+  [1m[35m (3.4ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateExerciseDurations (20211007165343)
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateExerciseDurations (20211007165343)
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateExerciseDurations (20211007165343)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "exercise_durations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" integer, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_1efd31ccc3"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_exercise_durations_on_patient_id" ON "exercise_durations" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007165343"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateWeights (20211007165514)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "weights" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" float, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_94a112ebbe"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_weights_on_patient_id" ON "weights" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007165514"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateHeights (20211007165629)
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "heights" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" float, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_317d55916d"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_heights_on_patient_id" ON "heights" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007165629"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateFalls (20211007165756)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "falls" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" integer, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_206a79c022"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_falls_on_patient_id" ON "falls" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007165756"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateMindfulMinutes (20211007165932)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "mindful_minutes" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" integer, "date_time" datetime, "patient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_274a289316"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_mindful_minutes_on_patient_id" ON "mindful_minutes" ("patient_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20211007165932"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.7ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2021-10-07 17:09:11.546035"], ["updated_at", "2021-10-07 17:09:11.546035"]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
