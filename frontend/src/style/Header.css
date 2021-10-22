@@ -1,5 +1,5 @@
 .Header {
-    height: 7%;
+    height: 54px;
     opacity: 0.6;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
@@ -8,4 +8,17 @@
     position: absolute;
     width: 99%;
     text-align: center;
+}
+
+.signup-in-icon {
+    background-color: white;
+    height: 42px;
+    margin: 5px;
+    border-radius: 25px;
+}
+
+.signout-icon {
+    background-color: white;
+    height: 42px;
+    margin: 5px;
 }
