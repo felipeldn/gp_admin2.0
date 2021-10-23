@@ -5,7 +5,7 @@ import API from '../API.js';
 import { connect } from 'react-redux';
 import * as actions from '../redux/actions'
 
-import SignUp from '../components/SignUp.js'
+// import SignUp from '../components/SignUp.js'
 import SignIn from '../components/SignIn.js'
 
 import '../style/Main.css'
