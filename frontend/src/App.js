@@ -3,7 +3,7 @@ import HeaderContent from './containers/Header.js'
 import Main from './containers/Main.js'
 import Footer from './containers/Footer.js'
 import './style/App.css';
-// import './index.css'
+import './style/index.css'
 
 function App() {
   return (
